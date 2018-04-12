@@ -1,15 +1,17 @@
 import pymysql
-import config
+from config import database as db
+
 
 def querys(sql):
-    conn = pymysql.connect(
-        host=config.database['host'],
-        port=config.database['port'],
-        user=config.database['user'],
-        passwd=config.database['passwd'],
-        db=config.database['db'],
-        charset=config.database['charset']
-    )
+    conn = pymysql.connect(db['host'], db['user'], db['passwd'], db['db'], db['port'], charset=db['charset'])
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    row = cursor.fetchall()
+    return row
+
+
+def querysVal(sql):
+    conn = pymysql.connect(db['host'], db['user'], db['passwd'], db['db'], db['port'], charset=db['charset'])
     cursor = conn.cursor()
     cursor.execute(sql)
     index = cursor.description
@@ -21,18 +23,3 @@ def querys(sql):
         result.append(row)
     conn.close()
     return result
-
-def querysVal(sql):
-    conn = pymysql.connect(
-        host=config.database['host'],
-        port=config.database['port'],
-        user=config.database['user'],
-        passwd=config.database['passwd'],
-        db=config.database['db'],
-        charset=config.database['charset']
-    )
-    cursor = conn.cursor()
-    cursor.execute(sql)
-    row_1 = cursor.fetchall()
-    cursor.close()
-    return row_1
