@@ -11,7 +11,7 @@ def a():
 
 #post get请求
 @app.route('/gp', methods=["get","post"])
-def hello_world(start, end):
+def hello_world():
    if request.method=="get":
        print(request.args['user'])
    elif request.method=="post":
